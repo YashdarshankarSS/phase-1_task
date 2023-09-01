@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Task Manager</title>
+</head>
+
+<body>
+  <form id="taskForm">
+    <div>
+    <label for="taskId"><b>Task ID</b></label>
+    <br><br>
+    <input type="number" id="taskId" name="taskId" class="parentInput"  placeholder="Enter task ID..." required>
+    <p class="error" id="taskIdError"></p>
+  </div>
+  <div>
+    <label for="taskName"><b>Task Name</b></label>
+    <br><br>
+    <input type="text" id="taskName" name="taskName" class="parentInput" placeholder="Enter task name..." required>
+    <p class="error" id="taskNameError"></p>
+  
+  </div>
+  <div>
+    <label for="startDate"><b>Start Date</b></label>
+    <br><br>
+    <input type="date" id="startDate" class="parentInput" name="startDate" required>
+    <p class="error" id="startDateError"></p>
+  </div>
+  <div>
+    <label for="endDate"><b>End Date</b></label>
+    <br><br>
+    <input type="date" id="endDate" class="parentInput" name="endDate" required>
+    <p class="error" id="endDateError"></p>
+  </div>
+  <div>
+    <label for="status"><b>Status</b></label>
+    <br><br>
+    <select id="status" class="parentInput">
+      <option id="completed" value="completed">Completed</option>
+      <option id="duedatepassed" value="duedatepassed">Due Date Passed</option>
+      <option id="inprocess" value="inprocess">In process</option>
+      <option id="cancelled" value="cancelled">Cancelled</option>
+    </select>
+  </div>  
+    <button id="addTaskBtn" type="button">Add Task</button>
+  </form>
+  <ul id="taskList"></ul>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

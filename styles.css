@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+
+
+
+}
+
+body {
+  /* background-color: #ffc107; */
+  background-image: url("Assets/bg4.webp");
+  background-size: cover;
+  /* background: linear-gradient(90deg, rgb(255, 154, 139), rgb(255, 146, 149), rgb(255, 153, 172));
+  /* background-color: lightblue;
+     */
+}
+
+
+#taskForm {
+  margin-bottom: 20px;
+}
+
+li {
+  list-style: none;
+  border: 2px solid #616161;
+  padding: 10px;
+  margin: 10px;
+  margin-top: 20px;
+  margin-left: 15px;
+
+  background-color: rgb(238, 235, 235);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.edit-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+.error{
+  color : red ;
+}
+button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 14px;
+  background-color: #0ca1db;
+  color: white;
+}
+
+/*    
+  .editTaskBtn,
+  .editSubTaskBtn {
+    background-color: #ffc107; 
+    color: white;
+  }
+  */
+.deleteTaskBtn,
+.deleteSubTaskBtn,
+.cancelBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  padding: 5px;
+  margin: 5px 0;
+  width: 80%;
+}
+
+form {
+  display: flex;
+  padding: 20px;
+  gap: 40px;
+  margin-top: 20px;
+
+}
+
+form>div {
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(238, 235, 235);
+}
+
+form>div>.parentInput {
+  background-color: white;
+  width: 200px;
+  height: 30px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: large;
+
+}
+
+#addTaskBtn {
+  position: absolute;
+  top: 200px;
+  left: 550px;
+  width: 20%;
+  height: 50px;
+  border-radius: 10px;
+  font-size: large;
+
+}
+
+#taskList {
+  padding: 0;
+  margin-top: 120px;
+}
+
+.subTaskList {
+  padding-left: 20px;
+}
