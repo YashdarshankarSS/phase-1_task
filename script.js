@@ -1,128 +1,154 @@
 var usedval = []
+var arr = []
+function validateTaskId() {
+  // var taskId = parseInt(document.getElementById("taskId").value);
+  var taskId = parseInt(document.querySelector("#taskId").value);
 
-function validateTaskId(){
-  var taskId = parseInt(document.getElementById("taskId").value);
-  if(isNaN(taskId) || taskId == null){
+  if (isNaN(taskId) || taskId == null) {
     alert('Please enter a valid task ID');
-    
+
   }
-  else if(usedval.includes(taskId)){
+  else if (usedval.includes(taskId)) {
     alert("Task ID already exists");
 
   }
-  else{
-    if(validateTaskName()){
+  else {
+    if (validateTaskName()) {
       usedval.push(taskId);
     }
-    console.log(usedval);    
+    console.log(usedval);
     return true;
   }
 }
-function validateTaskName(){
+function validateTaskName() {
   const val = document.getElementById("taskName").value;
-  if(val != "" && isNaN(val)){
+  if (val != "" && isNaN(val)) {
     return true;
-
   }
-  else{
+  else {
     alert('Please enter a valid task name');
   }
 }
-function validateDate(){
-  const TaskEndDateInput = document.getElementById('endDate');
-  const TaskStartDateInput = document.getElementById('startDate');
+function validateDate() {
+  // const TaskEndDateInput = document.getElementById('endDate');
+  // const TaskStartDateInput = document.getElementById('startDate');
+  const TaskEndDateInput = document.querySelector('#endDate');
+  const TaskStartDateInput = document.querySelector('#startDate');
+
+
   const TaskEndDate = new Date(TaskEndDateInput.value);
   const TaskStartDate = new Date(TaskStartDateInput.value);
-  console.log("start end",TaskStartDate);
-  console.log("end date",TaskEndDate);
   const currentDate = new Date();
-  var inprocess = document.getElementById('inprocess');
-  if(currentDate > TaskEndDate){
-    inprocess.style.display='none';
+  // var inprocess = document.getElementById('inprocess');
+  var inprocess = document.querySelector('#inprocess');
+
+  if (currentDate > TaskEndDate) {
+    inprocess.style.display = 'none';
   }
-  else{
-    inprocess.style.display='block';
+  else {
+    inprocess.style.display = 'block';
   }
 
 
-  if(TaskEndDateInput.value.length == 0 || TaskStartDateInput.value.length == 0) 
-  {
+  if (TaskEndDateInput.value.length == 0 || TaskStartDateInput.value.length == 0) {
     alert("please fill date values");
   }
 
   else if (TaskEndDate <= TaskStartDate) {
-      alert('End Date must be later than Start Date.');
+    alert('End Date must be later than Start Date.');
   } else {
-      return true;
+    return true;
   }
 }
-  const addTaskBtn = document.getElementById("addTaskBtn");
-  const taskName = document.getElementById("taskName").value.trim();
-  const startDate = document.getElementById("startDate").value;
-  const endDate = document.getElementById("endDate").value;
-  const status = document.getElementById("status").value;
-  var taskId = document.getElementById("taskId").value; 
-  const currentDate = new Date();
-  const endDateInput = document.getElementById('endDate');
-  const inprocessOption = document.getElementById('inprocess');
-  const duedateOption = document.getElementById('duedatepassed');
-  
+const addTaskBtn = document.getElementById("addTaskBtn");
+const taskName = document.getElementById("taskName").value.trim();
+const startDate = document.getElementById("startDate").value;
+const endDate = document.getElementById("endDate").value;
+const status = document.getElementById("status").value;
+var taskId = document.getElementById("taskId").value;
 
-  endDateInput.addEventListener('change', function () {
-    const selectedDate = new Date(endDateInput.value);
-    if (selectedDate > currentDate) {
-      inprocessOption.style.display = 'block';
-      duedateOption.style.display = 'none';
-      
-    } else {
-      inprocessOption.style.display = 'none';
-      duedateOption.style.display = 'block';
-    }
-  });
-  
-  addTaskBtn.addEventListener("click", function temp(){
-  if(validateTaskId() && validateTaskName() && validateDate())
-  {
-    addTask(); 
+const currentDate = new Date();
+const endDateInput = document.getElementById('endDate');
+const inprocessOption = document.getElementById('inprocess');
+const duedateOption = document.getElementById('duedatepassed');
+
+
+endDateInput.addEventListener('change', function () {
+  const selectedDate = new Date(endDateInput.value);
+  if (selectedDate > currentDate) {
+    inprocessOption.style.display = 'block';
+    duedateOption.style.display = 'none';
+
+  } else {
+    inprocessOption.style.display = 'none';
+    duedateOption.style.display = 'block';
   }
-  });
+});
+
+addTaskBtn.addEventListener("click", function temp() {
+  if (validateTaskId() && validateTaskName() && validateDate()) {
+    addTask();
+  }
+});
 function addTask() {
   const taskName = document.getElementById("taskName").value.trim();
-  const startDate = document.getElementById("startDate").value;
-  const endDate = document.getElementById("endDate").value;
+  const startDate = document.getElementById("startDate");
+  const endDate = document.getElementById("endDate");
   const status = document.getElementById("status").value;
-  const taskId = document.getElementById("taskId").value.trim(); 
-  const taskItem = createTaskElement(taskName, startDate, endDate, status, taskId); 
+  const taskId = document.getElementById("taskId").value.trim();
+  const taskItem = createTaskElement(taskName, startDate, endDate, status, taskId);
+
   document.getElementById("taskList").appendChild(taskItem);
 }
 function createTaskElement(taskName, startDate, endDate, status, taskId) {
   const taskItem = document.createElement("li");
   taskItem.innerHTML = `
     
-    <span><b>Task ID:</b> ${taskId}</span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span ><b>Task Name : </b><span class="taskName">${taskName}</span></span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span><b>Start Date:</b> ${startDate}</span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span><b>End Date:</b> ${endDate}</span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span><b>Status:</b> ${status}</span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="complete"><b>Task ID:</b> ${taskId}</span>
+  
+    <span class="complete"><b>Task Name : </b><span class="taskName">${taskName}</span></span>
+  
+    <span class="complete"><b>Start Date:</b> <span class="startDate">${startDate.value}</span></span>
+  
+    <span class="complete"><b>End Date:</b> <span class="endDate">${endDate.value}</span></span>
+  
+    <span class="complete"><b>Status:</b> <span class="status">${status}</span></span>
     <button class="addSubTaskBtn">Add Sub-Task</button>
     <button class="editTaskBtn">Edit</button>
     <button class="deleteTaskBtn">Delete</button>
     <ul class="subTaskList"></ul>
   `;
+  let new_arr = [taskId, taskName, startDate.value, endDate.value, status]
+  arr.push(new_arr);
+  console.log(arr);
+
+
+
+  // endDate.addEventListener('change', function () {
+  //   const selectedDate = new Date(endDate.value);
+  //   if (selectedDate > currentDate) {
+  //     // inprocessOption.style.display = 'block';
+  //     // duedateOption.style.display = 'none';
+  //     console.log("running if statement");
+
+  //   } else {
+  //     // inprocessOption.style.display = 'none';
+  //     // duedateOption.style.display = 'block';
+  //     console.log("running else statement");
+  //   }
+  // });
   const addSubTaskBtn = taskItem.querySelector(".addSubTaskBtn");
   addSubTaskBtn.addEventListener("click", function () {
-    openSubTaskInput(taskItem.querySelector(".subTaskList"), 0, taskId);
+
+    let startdate = new Date(startDate.value);
+    let enddate = new Date(endDate.value);
+
+    openSubTaskInput(taskItem.querySelector(".subTaskList"), 0, taskId, startdate, enddate);
   });
 
   const editTaskBtn = taskItem.querySelector(".editTaskBtn");
   editTaskBtn.addEventListener("click", function () {
-    openEditModal(taskItem.querySelector(".taskName"), "task");
+    openEditModal(taskItem.querySelector(".taskName"), taskItem.querySelector(".startDate"), taskItem.querySelector(".endDate"), taskItem.querySelector(".status"));
   });
 
   const deleteTaskBtn = taskItem.querySelector(".deleteTaskBtn");
@@ -135,8 +161,10 @@ function createTaskElement(taskName, startDate, endDate, status, taskId) {
 }
 var subtaskCounter = 1;
 
-function openSubTaskInput(subTaskList, currentLevel, parentTaskId) {
+function openSubTaskInput(subTaskList, currentLevel, parentTaskId, parentStartDate, parentEndDate) {
   if (currentLevel < 2) {
+
+
     const subTaskInput = document.createElement("input");
     subTaskInput.setAttribute("type", "text");
     subTaskInput.setAttribute("placeholder", `Enter sub-task level ${currentLevel + 2} name...`);
@@ -163,8 +191,13 @@ function openSubTaskInput(subTaskList, currentLevel, parentTaskId) {
       const subTaskStartDate = subStartDate.value;
       const subTaskEndDate = subEndDate.value;
       const subTaskStatus = subStatus.value;
-      
-      if (subTaskName !== "" && subTaskStartDate !== "" && subTaskEndDate !== "" && subTaskStatus !== "" ) {
+
+      const startdate = new Date(subTaskStartDate);
+      const enddate = new Date(subTaskEndDate);
+
+
+
+      if (subTaskName !== "" && subTaskStartDate !== "" && subTaskEndDate !== "" && subTaskStatus !== "" && startdate < enddate && parentStartDate < startdate && parentEndDate > enddate) {
         newId = `${parentTaskId}.${subtaskCounter}`;
         subtaskCounter++;
         const subTaskItem = createSubTaskElement(subTaskName, currentLevel + 1, newId, subStartDate.value, subEndDate.value, subStatus.value);
@@ -176,24 +209,34 @@ function openSubTaskInput(subTaskList, currentLevel, parentTaskId) {
         addSubTaskBtn.remove();
         cancelSubTaskBtn.remove();
       }
-      else{
+      else if (startdate > enddate) {
+        alert("End date should come later than start date");
+      }
+      else if (parentStartDate > startdate) {
+        alert("startdate should be later than parent start date");
+      }
+
+      else if (parentEndDate < enddate) {
+        alert("End Date should come before parent end date");
+      }
+      else {
         alert('Please fill all fields');
       }
-      
+
     });
 
     const cancelSubTaskBtn = document.createElement("button");
     cancelSubTaskBtn.textContent = "cancel";
     cancelSubTaskBtn.classList.add("cancelBtn");
     cancelSubTaskBtn.addEventListener("click", function () {
-        subTaskInput.remove();
-        subStartDate.remove();
-        subEndDate.remove();
-        subStatus.remove();
-        addSubTaskBtn.remove();
-        cancelSubTaskBtn.remove();
-      
-      
+      subTaskInput.remove();
+      subStartDate.remove();
+      subEndDate.remove();
+      subStatus.remove();
+      addSubTaskBtn.remove();
+      cancelSubTaskBtn.remove();
+
+
     });
 
     subTaskList.appendChild(subTaskInput);
@@ -202,44 +245,54 @@ function openSubTaskInput(subTaskList, currentLevel, parentTaskId) {
     subTaskList.appendChild(subStatus);
     subTaskList.appendChild(addSubTaskBtn);
     subTaskList.appendChild(cancelSubTaskBtn);
-    
+
   }
 }
 
 function createSubTaskElement(subTaskName, currentLevel, subTaskId, subStartDate, subEndDate, subStatus) {
   const subTaskItem = document.createElement("li");
   subTaskItem.innerHTML = `
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <span><b>Sub-Task ID:</b> ${subTaskId}</span>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span><b>Sub-Task Name:</b> <span class="subTaskName">${subTaskName}</span></span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span><b>Start Date:</b> ${subStartDate}</span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span><b>End Date:</b> ${subEndDate}</span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span><b>Status:</b> ${subStatus}</span>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  
+  <span class="complete"><b>Sub-Task ID:</b> ${subTaskId}</span>
+  
+    <span class="complete"><b>Sub-Task Name:</b> <span class="subTaskName">${subTaskName}</span></span>
+  
+    <span class="complete"><b>Start Date:</b> ${subStartDate}</span>
+  
+    <span class="complete"><b>End Date:</b> ${subEndDate}</span>
+  
+    <span class="complete"><b>Status:</b> ${subStatus}</span>
+  
     
     <button class="addSubTaskBtn">Add Sub-Task</button>
     <button class="editSubTaskBtn">Edit</button>
     <button class="deleteSubTaskBtn">Delete</button>
     <ul class="subTaskList"></ul>
   `;
+  let new_arr = [subTaskId, subTaskName, subStartDate, subEndDate, subStatus]
+  arr.push(new_arr);
+  console.log(arr);
+
 
   const addSubTaskBtn = subTaskItem.querySelector(".addSubTaskBtn");
 
   if (currentLevel >= 2) {
-    addSubTaskBtn.style.display = "none"; 
+    addSubTaskBtn.style.display = "none";
   }
 
   addSubTaskBtn.addEventListener("click", function () {
-    openSubTaskInput(subTaskItem.querySelector(".subTaskList"), currentLevel, subTaskId);
+    let startdate = new Date(subStartDate);
+    let enddate = new Date(subEndDate);
+    console.log(startdate, subStartDate);
+    console.log(enddate, subEndDate);
+
+
+    openSubTaskInput(subTaskItem.querySelector(".subTaskList"), currentLevel, subTaskId, startdate, enddate);
   });
 
   const editSubTaskBtn = subTaskItem.querySelector(".editSubTaskBtn");
   editSubTaskBtn.addEventListener("click", function () {
-    openEditModal(subTaskItem.querySelector(".subTaskName"),  subStartDate, subEndDate, subStatus);
+    openEditModal(subTaskItem.querySelector(".subTaskName"), subStartDate, subEndDate, subStatus);
   });
 
   const deleteSubTaskBtn = subTaskItem.querySelector(".deleteSubTaskBtn");
@@ -250,7 +303,7 @@ function createSubTaskElement(subTaskName, currentLevel, subTaskId, subStartDate
   return subTaskItem;
 }
 
-function openEditModal(element, startDate = '', endDate = '', status = '') {
+function openEditModal(element, elementSD, elementED, elementSS) {
   const modal = document.createElement("div");
   modal.classList.add("edit-modal");
 
@@ -260,11 +313,11 @@ function openEditModal(element, startDate = '', endDate = '', status = '') {
 
   const startDateInput = document.createElement("input");
   startDateInput.setAttribute("type", "date");
-  startDateInput.value = startDate;
+
 
   const endDateInput = document.createElement("input");
   endDateInput.setAttribute("type", "date");
-  endDateInput.value = endDate;
+
 
   const statusSelect = document.createElement("select");
   const statusOptions = ["completed", "duedatepassed", "incomplete", "cancelled"];
@@ -274,7 +327,6 @@ function openEditModal(element, startDate = '', endDate = '', status = '') {
     optionElement.textContent = option;
     statusSelect.appendChild(optionElement);
   }
-  statusSelect.value = status;
 
   const saveButton = document.createElement("button");
   saveButton.textContent = "Save";
@@ -285,12 +337,18 @@ function openEditModal(element, startDate = '', endDate = '', status = '') {
     const newStatus = statusSelect.value;
     if (newValue !== "") {
       element.textContent = newValue;
+      elementSD.textContent = newStartDate;
+      elementED.textContent = newEndDate;
+      elementSS.textContent = newStatus;
+
       modal.remove();
     }
+
   });
 
   const cancelButton = document.createElement("button");
   cancelButton.textContent = "Cancel";
+  cancelButton.classList.add("cancelBtn");
   cancelButton.addEventListener("click", function () {
     modal.remove();
   });
@@ -308,199 +366,35 @@ function openEditModal(element, startDate = '', endDate = '', status = '') {
 
 
 
+searchBtn = document.querySelector("#searchBtn");
+searchBtn.addEventListener("click", function () {
+  search_val = document.querySelector("#searchInput").value;
+  console.log("Value to Search : - ", search_val);
+  tbody = document.querySelector("tbody");
+  tbody.innerHTML = ``;
+  arr.forEach(i => {
+    i.forEach(item => {
+      if (item == search_val) {
+        alert("search is successful");
+        tbody.innerHTML += `
+        <tr>
+        <td>${i[0]}</td>
+        <td>${i[1]}</td>
+        <td>${i[2]}</td>
+        <td>${i[3]}</td>
+        <td>${i[4]}</td>
+      </tr>
+      
+        
+        `
 
+      }
+      
 
+    })
 
+  }
 
+  );
 
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     const addTaskBtn = document.getElementById("addTaskBtn");
-//     addTaskBtn.addEventListener("click", addTask);
-// });
-
-// function addTask() {
-//     const taskName = document.getElementById("taskName").value;
-//     if (taskName.trim() === "") {
-//         return;
-//     }
-
-//     const taskItem = document.createElement("li");
-//     taskItem.innerHTML = `
-//         <span>${taskName}</span>
-//         <button class="addSubTaskBtn">Add Sub-Task</button>
-//     `;
-
-//     const addSubTaskBtn = taskItem.querySelector(".addSubTaskBtn");
-//     addSubTaskBtn.addEventListener("click", addSubTask);
-
-//     document.getElementById("taskList").appendChild(taskItem);
-//     document.getElementById("taskName").value = "";
-// }
-
-// function addSubTask(event) {
-//     const subTaskName = prompt("Enter sub-task name:");
-//     if (subTaskName !== null && subTaskName.trim() !== "") {
-//         const subTaskItem = document.createElement("li");
-//         subTaskItem.textContent = subTaskName;
-//         event.target.parentNode.appendChild(subTaskItem);
-//     }
-// }
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     const addTaskBtn = document.getElementById("addTaskBtn");
-//     addTaskBtn.addEventListener("click", addTask);
-// });
-
-// let taskIdCounter = 1; // Counter for generating unique IDs
-
-// function addTask() {
-//     const taskName = document.getElementById("taskName").value;
-//     if (taskName.trim() === "") {
-//         return;
-//     }
-
-//     const taskId = `${taskIdCounter}`;
-//     const taskItem = createTaskElement(taskId, taskName);
-//     document.getElementById("taskList").appendChild(taskItem);
-//     document.getElementById("taskName").value = "";
-
-//     taskIdCounter++;
-// }
-
-// function createTaskElement(taskId, taskName) {
-//     const taskItem = document.createElement("li");
-//     taskItem.setAttribute("data-task-id", taskId);
-//     taskItem.innerHTML = `
-//         <span>${taskId}${taskName}</span>
-//         <button class="addSubTaskBtn">Add Sub-Task</button>
-//     `;
-
-//     const addSubTaskBtn = taskItem.querySelector(".addSubTaskBtn");
-//     var subtaskcount = 1;
-//     addSubTaskBtn.addEventListener("click", function() {
-//         const subTaskName = prompt("Enter sub-task name:");
-//         if (subTaskName !== null && subTaskName.trim() !== "") {
-//             const subTaskId = `${taskId}-${subtaskcount}`;
-//             const subTaskItem = createTaskElement(subTaskId, subTaskName);
-//             taskItem.appendChild(subTaskItem);
-//             subtaskcount++;
-
-//         }
-//     });
-
-//     return taskItem;
-// }
-
-
-//////////////////////newest
-
-
-
-// let tasks = [];
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   const addTaskBtn = document.getElementById("addTaskBtn");
-//   addTaskBtn.addEventListener("click", addTask);
-// });
-
-// function addTask() {
-//   const taskName = document.getElementById("taskName").value;
-
-//   const task = {
-//     id: tasks.length,
-//     name: taskName,
-//     subTasks: []
-//   };
-
-//   tasks.push(task);
-//   renderTasks();
-  
-//   document.getElementById("taskName").value = "";
-// }
-
-// function renderTasks() {
-//   const taskList = document.getElementById("taskList");
-//   taskList.innerHTML = "";
-
-//   tasks.forEach((task, index) => {
-//     const taskItem = document.createElement("li");
-//     taskItem.innerHTML = `
-//       <span>${task.name}</span>
-//       <button class="addSubTaskBtn">Add Sub-Task</button>
-//       <button class="editTaskBtn">Edit</button>
-//       <button class="deleteTaskBtn">Delete</button>
-//       <ul class="subTaskList"></ul>
-//     `;
-
-//     const addSubTaskBtn = taskItem.querySelector(".addSubTaskBtn");
-//     addSubTaskBtn.addEventListener("click", function () {
-//       openSubTaskInput(task.subTasks, 0, task.id);
-//     });
-
-//     const editTaskBtn = taskItem.querySelector(".editTaskBtn");
-//     editTaskBtn.addEventListener("click", function () {
-//       openEditModal(taskItem.querySelector("span"), "task", task.id);
-//     });
-
-//     const deleteTaskBtn = taskItem.querySelector(".deleteTaskBtn");
-//     deleteTaskBtn.addEventListener("click", function () {
-//       tasks.splice(index, 1);
-//       renderTasks();
-//     });
-
-//     taskList.appendChild(taskItem);
-
-//     task.subTasks.forEach((subTask, subIndex) => {
-//       const subTaskItem = document.createElement("li");
-//       subTaskItem.innerHTML = `
-//         <span>${subTask.name}</span>
-//         <button class="editSubTaskBtn">Edit</button>
-//         <button class="deleteSubTaskBtn">Delete</button>
-//       `;
-
-//       const editSubTaskBtn = subTaskItem.querySelector(".editSubTaskBtn");
-//       editSubTaskBtn.addEventListener("click", function () {
-//         openEditModal(subTaskItem.querySelector("span"), "sub-task", task.id, subIndex);
-//       });
-
-//       const deleteSubTaskBtn = subTaskItem.querySelector(".deleteSubTaskBtn");
-//       deleteSubTaskBtn.addEventListener("click", function () {
-//         task.subTasks.splice(subIndex, 1);
-//         renderTasks();
-//       });
-
-//       const subTaskList = taskItem.querySelector(".subTaskList");
-//       subTaskList.appendChild(subTaskItem);
-//     });
-//   });
-// }
-
-// function openSubTaskInput(subTasks, currentLevel, taskId) {
-//   const subTaskName = prompt(`Enter sub-task level ${currentLevel + 1} name:`);
-//   if (subTaskName !== null && subTaskName.trim() !== "") {
-//     const subTask = {
-//       name: subTaskName
-//     };
-//     subTasks.push(subTask);
-//     renderTasks();
-//   }
-// }
-
-// function openEditModal(element, itemType, taskId, subTaskIndex) {
-//   const newValue = prompt("Edit " + (itemType === "task" ? "task" : "sub-task") + ":", element.textContent);
-  
-//   if (newValue !== null && newValue.trim() !== "") {
-//     if (itemType === "task") {
-//       tasks[taskId].name = newValue;
-//       renderTasks();
-//     } else if (itemType === "sub-task") {
-//       tasks[taskId].subTasks[subTaskIndex].name = newValue;
-//       renderTasks();
-//     }
-//   }
-// }
+});
